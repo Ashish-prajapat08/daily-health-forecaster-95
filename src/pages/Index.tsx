@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LifestyleForm from '../components/LifestyleForm';
 import HealthDashboard from '../components/HealthDashboard';
+import Profile from '../components/Profile';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 
@@ -78,7 +79,7 @@ const Index = () => {
                 <HealthDashboard predictionData={predictionData} />
               </div>
             )}
-            {activeTab === 'profile' && <div>Profile Content</div>}
+            {activeTab === 'profile' && <Profile />}
             {activeTab === 'settings' && <div>Settings Content</div>}
             {activeTab === 'activity' && <div>Activity Content</div>}
           </div>
