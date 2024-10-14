@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import { toast } from '@/components/ui/use-toast';
 
 const predictHealth = async (data) => {
   // TODO: Implement actual API call
@@ -28,13 +27,12 @@ const LifestyleForm = () => {
     stressLevel: 5,
   });
 
+  const [notification, setNotification] = useState('');
+
   const mutation = useMutation({
     mutationFn: predictHealth,
     onSuccess: (data) => {
-      toast({
-        title: 'Prediction Complete',
-        description: 'Your health prediction has been updated.',
-      });
+      setNotification('Your health prediction has been updated.');
       // TODO: Update dashboard with prediction results
     },
   });
@@ -55,6 +53,11 @@ const LifestyleForm = () => {
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <h2 className="text-2xl font-bold mb-6">Your Lifestyle Information</h2>
+      {notification && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <span className="block sm:inline">{notification}</span>
+        </div>
+      )}
       <div className="mb-4">
         <Label htmlFor="age">Age</Label>
         <Input
