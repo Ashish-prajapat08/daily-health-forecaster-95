@@ -17,7 +17,7 @@ const predictHealth = async (data) => {
   });
 };
 
-const LifestyleForm = () => {
+const LifestyleForm = ({ onPredictionUpdate }) => {
   const [formData, setFormData] = useState({
     age: '',
     weight: '',
@@ -33,7 +33,7 @@ const LifestyleForm = () => {
     mutationFn: predictHealth,
     onSuccess: (data) => {
       setNotification('Your health prediction has been updated.');
-      // TODO: Update dashboard with prediction results
+      onPredictionUpdate(data); // Pass the prediction data to the parent component
     },
   });
 

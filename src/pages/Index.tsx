@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LifestyleForm from '../components/LifestyleForm';
 import HealthDashboard from '../components/HealthDashboard';
@@ -6,6 +6,12 @@ import HealthDashboard from '../components/HealthDashboard';
 const queryClient = new QueryClient();
 
 const Index = () => {
+  const [predictionData, setPredictionData] = useState(null);
+
+  const handlePredictionUpdate = (data) => {
+    setPredictionData(data);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-gray-100">
@@ -17,8 +23,8 @@ const Index = () => {
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <LifestyleForm />
-              <HealthDashboard />
+              <LifestyleForm onPredictionUpdate={handlePredictionUpdate} />
+              <HealthDashboard predictionData={predictionData} />
             </div>
           </div>
         </main>
