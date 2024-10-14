@@ -4,6 +4,7 @@ import LifestyleForm from '../components/LifestyleForm';
 import HealthDashboard from '../components/HealthDashboard';
 import Profile from '../components/Profile';
 import Settings from '../components/Settings';
+import Activity from '../components/Activity';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import { ThemeProvider } from 'next-themes';
@@ -84,7 +85,7 @@ const Index = () => {
               )}
               {activeTab === 'profile' && <Profile />}
               {activeTab === 'settings' && <Settings />}
-              {activeTab === 'activity' && <div>Activity Content</div>}
+              {activeTab === 'activity' && <Activity />}
             </div>
           </main>
         </div>
