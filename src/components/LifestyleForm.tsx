@@ -6,15 +6,27 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 
 const predictHealth = async (data) => {
-  // TODO: Implement actual API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        possibleDiseases: ['Hypertension', 'Type 2 Diabetes'],
-        riskLevel: 'Moderate',
-      });
-    }, 1000);
-  });
+  // Simulated prediction logic
+  const risks = [];
+  const { age, weight, height, exerciseFrequency, sleepHours, stressLevel } = data;
+  const bmi = weight / ((height / 100) ** 2);
+
+  if (bmi > 25) risks.push('Obesity');
+  if (bmi > 30 || stressLevel > 7) risks.push('Hypertension');
+  if (bmi > 30 && exerciseFrequency < 3) risks.push('Type 2 Diabetes');
+  if (sleepHours < 6 || stressLevel > 8) risks.push('Insomnia');
+  if (age > 50 && exerciseFrequency < 2) risks.push('Osteoporosis');
+  if (stressLevel > 7 && sleepHours < 6) risks.push('Anxiety');
+  if (exerciseFrequency < 2 && age > 40) risks.push('Cardiovascular Disease');
+
+  let riskLevel = 'Low';
+  if (risks.length > 2) riskLevel = 'Moderate';
+  if (risks.length > 4) riskLevel = 'High';
+
+  return {
+    possibleDiseases: risks,
+    riskLevel: riskLevel,
+  };
 };
 
 const LifestyleForm = ({ onPredictionUpdate }) => {
@@ -33,7 +45,7 @@ const LifestyleForm = ({ onPredictionUpdate }) => {
     mutationFn: predictHealth,
     onSuccess: (data) => {
       setNotification('Your health prediction has been updated.');
-      onPredictionUpdate(data); // Pass the prediction data to the parent component
+      onPredictionUpdate(data);
     },
   });
 
