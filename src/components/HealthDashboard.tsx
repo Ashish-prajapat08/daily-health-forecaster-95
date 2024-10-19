@@ -123,9 +123,9 @@ const WaterIntakeChart = ({ data }) => (
 const AnalyticalStatistics = ({ userData }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
     <StatCard icon={Scale} title="BMI" value={calculateBMI(userData.weight, userData.height).toFixed(1)} />
-    <StatCard icon={Activity} title="Daily Steps" value={userData.stepsPerDay.toLocaleString()} />
-    <StatCard icon={Moon} title="Sleep Time" value={`${userData.averageSleep}h`} />
-    <StatCard icon={Heart} title="Resting Heart Rate" value={`${userData.heartRate} bpm`} />
+    <StatCard icon={Activity} title="Daily Steps" value={userData.stepsPerDay ? userData.stepsPerDay.toLocaleString() : 'N/A'} />
+    <StatCard icon={Moon} title="Sleep Time" value={`${userData.averageSleep || 'N/A'}h`} />
+    <StatCard icon={Heart} title="Resting Heart Rate" value={`${userData.heartRate || 'N/A'} bpm`} />
   </div>
 );
 
