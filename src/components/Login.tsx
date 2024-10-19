@@ -1,63 +1,63 @@
 import React, { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Box } from '@react-three/drei';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const AnimatedBox = () => (
-  <Box args={[1, 1, 1]}>
-    <meshStandardMaterial color="hotpink" />
-  </Box>
-);
-
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, you'd validate credentials here
-    if (username === 'user' && password === 'password') {
+    if (email && password) {
       onLogin();
     } else {
-      alert('Invalid credentials');
+      alert('Please enter both email and password');
     }
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/2 bg-gray-100">
-        <Canvas>
-          <ambientLight intensity={0.5} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-          <AnimatedBox />
-          <OrbitControls />
-        </Canvas>
-      </div>
-      <div className="w-1/2 flex items-center justify-center">
-        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
-          <div>
-            <Label htmlFor="username">Username</Label>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center px-4">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <svg className="mx-auto h-12 w-auto" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#3B82F6">SEVA</text>
+          </svg>
+          <h2 className="mt-4 text-lg font-medium text-gray-600">Empowering You Towards Better Health</h2>
+        </div>
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+          <div className="mb-4">
+            <Label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</Label>
             <Input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
+              className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
             />
           </div>
-          <div>
-            <Label htmlFor="password">Password</Label>
+          <div className="mb-6">
+            <Label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</Label>
             <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
             />
           </div>
-          <Button type="submit" className="w-full">Log in</Button>
+          <div className="flex items-center justify-between mb-6">
+            <div></div>
+            <a href="#" className="text-sm text-blue-600 hover:text-blue-800">Forgot Password?</a>
+          </div>
+          <div className="flex items-center justify-between">
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Log In
+            </Button>
+          </div>
         </form>
       </div>
     </div>
