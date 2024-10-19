@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, set
               </Button>
             ))}
           </nav>
-          <Button variant="ghost" className="w-full justify-start px-4 py-2 text-left absolute bottom-4" onClick={onLogout}>
+          <Button variant="ghost" className="w-full justify-start px-4 py-2 text-left absolute bottom-4 text-red-500" onClick={onLogout}>
             <LogOut className="mr-2 h-4 w-4" />
             Logout
           </Button>

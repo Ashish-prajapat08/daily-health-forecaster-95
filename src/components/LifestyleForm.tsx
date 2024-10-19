@@ -105,12 +105,12 @@ const LifestyleForm = ({ onPredictionUpdate }) => {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 overflow-y-auto max-h-[calc(100vh-200px)]">
+    <form onSubmit={handleSubmit} className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 overflow-y-auto max-h-[calc(100vh-200px)]">
       <h2 className="text-2xl font-bold mb-6 dark:text-white">Your Lifestyle Information</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {inputFields.map((field) => (
           <div key={field.name} className="mb-4">
-            <Label htmlFor={field.name} className="flex items-center">
+            <Label htmlFor={field.name} className="flex items-center text-blue-600 dark:text-blue-300">
               <field.icon className="mr-2 h-4 w-4" />
               {field.label}
             </Label>
@@ -120,14 +120,14 @@ const LifestyleForm = ({ onPredictionUpdate }) => {
               type={field.type}
               value={formData[field.name]}
               onChange={handleInputChange}
-              className="mt-1"
+              className="mt-1 bg-white dark:bg-gray-800 border-blue-300 dark:border-blue-600"
               required
             />
           </div>
         ))}
         {sliderFields.map((field) => (
           <div key={field.name} className="mb-4">
-            <Label htmlFor={field.name} className="flex items-center">
+            <Label htmlFor={field.name} className="flex items-center text-blue-600 dark:text-blue-300">
               <field.icon className="mr-2 h-4 w-4" />
               {field.label}
             </Label>
@@ -146,7 +146,7 @@ const LifestyleForm = ({ onPredictionUpdate }) => {
           </div>
         ))}
       </div>
-      <Button type="submit" className="mt-6 w-full" disabled={mutation.isPending}>
+      <Button type="submit" className="mt-6 w-full bg-blue-500 hover:bg-blue-600" disabled={mutation.isPending}>
         {mutation.isPending ? 'Updating...' : 'Update Health Prediction'}
       </Button>
     </form>
