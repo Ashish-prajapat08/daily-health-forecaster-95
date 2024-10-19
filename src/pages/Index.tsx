@@ -8,15 +8,8 @@ import Activity from '../components/Activity';
 import ProgressTracking from '../components/ProgressTracking';
 import Recommendations from '../components/Recommendations';
 import Sidebar from '../components/Sidebar';
-import { Button } from '@/components/ui/button';
-import { User, Settings as SettingsIcon, LogOut } from 'lucide-react';
+import Navbar from '../components/Navbar';
 import { ThemeProvider } from 'next-themes';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const queryClient = new QueryClient();
 
@@ -43,43 +36,23 @@ const Index = () => {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
-          <main className={`flex-1 p-8 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'}`}>
-            <div className="flex justify-end mb-4">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost">
-                    <User className="h-6 w-6" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onSelect={() => setActiveTab('profile')}>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setActiveTab('settings')}>
-                    <SettingsIcon className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            {activeTab === 'dashboard' && (
-              <div className="space-y-8">
-                <LifestyleForm onPredictionUpdate={handlePredictionUpdate} />
-                <HealthDashboard predictionData={predictionData} />
-              </div>
-            )}
-            {activeTab === 'profile' && <Profile />}
-            {activeTab === 'settings' && <Settings />}
-            {activeTab === 'health-insights' && <Settings />}
-            {activeTab === 'activity' && <Activity />}
-            {activeTab === 'progress-tracking' && <ProgressTracking />}
-            {activeTab === 'recommendations' && <Recommendations />}
-          </main>
+          <div className="flex-1 flex flex-col">
+            <Navbar />
+            <main className={`flex-1 p-8 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'} mt-16`}>
+              {activeTab === 'dashboard' && (
+                <div className="space-y-8">
+                  <LifestyleForm onPredictionUpdate={handlePredictionUpdate} />
+                  <HealthDashboard predictionData={predictionData} />
+                </div>
+              )}
+              {activeTab === 'profile' && <Profile />}
+              {activeTab === 'settings' && <Settings />}
+              {activeTab === 'health-insights' && <Settings />}
+              {activeTab === 'activity' && <Activity />}
+              {activeTab === 'progress-tracking' && <ProgressTracking />}
+              {activeTab === 'recommendations' && <Recommendations />}
+            </main>
+          </div>
         </div>
       </ThemeProvider>
     </QueryClientProvider>
