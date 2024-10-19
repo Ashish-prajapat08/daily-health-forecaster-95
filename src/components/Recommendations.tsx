@@ -40,7 +40,7 @@ const Recommendations = ({ userData }) => {
     }
 
     // Sleep recommendations
-    if (userData.averageSleep < 7 || userData.averageSleep > 9) {
+    if (userData.sleepHours < 7 || userData.sleepHours > 9) {
       recommendations.push({
         title: 'Sleep Hygiene',
         icon: Brain,
@@ -61,11 +61,11 @@ const Recommendations = ({ userData }) => {
     }
 
     // Hydration
-    if (userData.hydrationLevel < 2.7) {
+    if (userData.waterIntake < 8) {
       recommendations.push({
         title: 'Hydration',
         icon: Droplet,
-        content: "Increase your water intake to at least 2.7 liters per day. Keep a water bottle with you and set reminders to drink regularly.",
+        content: "Increase your water intake to at least 8 glasses per day. Keep a water bottle with you and set reminders to drink regularly.",
         image: "https://example.com/hydration-image.jpg"
       });
     }
@@ -81,7 +81,7 @@ const Recommendations = ({ userData }) => {
     }
 
     // Smoking
-    if (userData.smokingStatus !== 'Non-smoker') {
+    if (userData.smokingFrequency > 0) {
       recommendations.push({
         title: 'Smoking Cessation',
         icon: Cigarette,

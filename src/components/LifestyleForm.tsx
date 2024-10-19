@@ -38,6 +38,7 @@ const predictHealth = async (data) => {
   return {
     possibleDiseases: risks,
     riskLevel: riskLevel,
+    userData: data,
   };
 };
 

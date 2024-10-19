@@ -21,7 +21,7 @@ const Index = ({ onLogout }) => {
 
   const handlePredictionUpdate = (data) => {
     setPredictionData(data);
-    setUserData(data); // Assuming the prediction data includes user data
+    setUserData(data.userData);
   };
 
   const toggleSidebar = () => {

@@ -10,28 +10,28 @@ const HealthDashboard = ({ userData, predictionData }) => {
 
   // Weekly activity data (example, replace with actual user data)
   const activityData = [
-    { day: 'Mon', steps: 8000, calories: 300, activityTime: 45 },
-    { day: 'Tue', steps: 10000, calories: 400, activityTime: 60 },
-    { day: 'Wed', steps: 9000, calories: 350, activityTime: 55 },
-    { day: 'Thu', steps: 11000, calories: 450, activityTime: 70 },
-    { day: 'Fri', steps: 9500, calories: 380, activityTime: 50 },
-    { day: 'Sat', steps: 12000, calories: 500, activityTime: 80 },
-    { day: 'Sun', steps: 7000, calories: 280, activityTime: 40 },
+    { day: 'Mon', steps: userData.dailySteps, calories: 300, activityTime: 45 },
+    { day: 'Tue', steps: userData.dailySteps, calories: 400, activityTime: 60 },
+    { day: 'Wed', steps: userData.dailySteps, calories: 350, activityTime: 55 },
+    { day: 'Thu', steps: userData.dailySteps, calories: 450, activityTime: 70 },
+    { day: 'Fri', steps: userData.dailySteps, calories: 380, activityTime: 50 },
+    { day: 'Sat', steps: userData.dailySteps, calories: 500, activityTime: 80 },
+    { day: 'Sun', steps: userData.dailySteps, calories: 280, activityTime: 40 },
   ];
 
-  // Health metrics data (example, replace with actual user data)
+  // Health metrics data
   const healthMetrics = [
     { name: 'Heart Rate', value: userData.heartRate },
     { name: 'Blood Pressure', value: userData.bloodPressure },
     { name: 'BMI', value: calculateBMI(userData.weight, userData.height) },
-    { name: 'Blood Sugar', value: userData.bloodSugar },
-    { name: 'Cholesterol', value: userData.cholesterol },
+    { name: 'Body Fat', value: userData.bodyFatPercentage },
+    { name: 'Cholesterol', value: userData.cholesterolLevel },
   ];
 
-  // Water intake data (example, replace with actual user data)
+  // Water intake data
   const waterIntakeData = [
-    { name: 'Consumed', value: userData.hydrationLevel },
-    { name: 'Remaining', value: 3.7 - userData.hydrationLevel }, // Assuming 3.7L is the daily goal
+    { name: 'Consumed', value: userData.waterIntake },
+    { name: 'Remaining', value: 8 - userData.waterIntake }, // Assuming 8 glasses is the daily goal
   ];
 
   return (
@@ -123,8 +123,8 @@ const WaterIntakeChart = ({ data }) => (
 const AnalyticalStatistics = ({ userData }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
     <StatCard icon={Scale} title="BMI" value={calculateBMI(userData.weight, userData.height).toFixed(1)} />
-    <StatCard icon={Activity} title="Daily Steps" value={userData.stepsPerDay ? userData.stepsPerDay.toLocaleString() : 'N/A'} />
-    <StatCard icon={Moon} title="Sleep Time" value={`${userData.averageSleep || 'N/A'}h`} />
+    <StatCard icon={Activity} title="Daily Steps" value={userData.dailySteps ? userData.dailySteps.toLocaleString() : 'N/A'} />
+    <StatCard icon={Moon} title="Sleep Time" value={`${userData.sleepHours || 'N/A'}h`} />
     <StatCard icon={Heart} title="Resting Heart Rate" value={`${userData.heartRate || 'N/A'} bpm`} />
   </div>
 );
