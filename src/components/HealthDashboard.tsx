@@ -4,6 +4,10 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianG
 import { Activity, Heart, Droplet, Scale, Moon } from 'lucide-react';
 
 const HealthDashboard = ({ userData, predictionData }) => {
+  if (!userData) {
+    return <div>Loading user data...</div>;
+  }
+
   // Weekly activity data (example, replace with actual user data)
   const activityData = [
     { day: 'Mon', steps: 8000, calories: 300, activityTime: 45 },

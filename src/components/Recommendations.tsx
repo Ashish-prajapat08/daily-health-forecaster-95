@@ -3,6 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Utensils, Activity, Brain, Heart, Droplet, Scale, Cigarette, Wine } from 'lucide-react';
 
 const Recommendations = ({ userData }) => {
+  if (!userData) {
+    return <div>Loading user data...</div>;
+  }
+
   const getRecommendations = () => {
     const recommendations = [];
 

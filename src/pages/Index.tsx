@@ -15,11 +15,13 @@ const queryClient = new QueryClient();
 
 const Index = ({ onLogout }) => {
   const [predictionData, setPredictionData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handlePredictionUpdate = (data) => {
     setPredictionData(data);
+    setUserData(data); // Assuming the prediction data includes user data
   };
 
   const toggleSidebar = () => {
@@ -43,7 +45,7 @@ const Index = ({ onLogout }) => {
               {activeTab === 'dashboard' && (
                 <div className="space-y-8">
                   <LifestyleForm onPredictionUpdate={handlePredictionUpdate} />
-                  <HealthDashboard predictionData={predictionData} />
+                  {userData && <HealthDashboard userData={userData} predictionData={predictionData} />}
                 </div>
               )}
               {activeTab === 'profile' && <Profile />}
@@ -51,7 +53,7 @@ const Index = ({ onLogout }) => {
               {activeTab === 'health-insights' && <Settings />}
               {activeTab === 'activity' && <Activity />}
               {activeTab === 'progress-tracking' && <ProgressTracking />}
-              {activeTab === 'recommendations' && <Recommendations predictionData={predictionData} />}
+              {activeTab === 'recommendations' && userData && <Recommendations userData={userData} />}
             </main>
           </div>
         </div>
