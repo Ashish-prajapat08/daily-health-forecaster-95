@@ -1,14 +1,13 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Activity, Heart, Droplet, Scale, Moon } from 'lucide-react';
+import { Activity, Heart, Droplet, Scale, Moon, AlertTriangle } from 'lucide-react';
 
 const HealthDashboard = ({ userData, predictionData }) => {
   if (!userData) {
     return <div>Loading user data...</div>;
   }
 
-  // Weekly activity data (example, replace with actual user data)
   const activityData = [
     { day: 'Mon', steps: userData.dailySteps, calories: 300, activityTime: 45 },
     { day: 'Tue', steps: userData.dailySteps, calories: 400, activityTime: 60 },
@@ -47,6 +46,7 @@ const HealthDashboard = ({ userData, predictionData }) => {
             <WaterIntakeChart data={waterIntakeData} />
           </div>
           <AnalyticalStatistics userData={userData} />
+          <HealthRiskAssessment predictionData={predictionData} />
         </CardContent>
       </Card>
     </div>
@@ -139,6 +139,26 @@ const StatCard = ({ icon: Icon, title, value }) => (
       </div>
     </CardContent>
   </Card>
+);
+
+const HealthRiskAssessment = ({ predictionData }) => (
+  <div className="mt-6">
+    <h3 className="text-xl font-semibold mb-4 flex items-center">
+      <AlertTriangle className="mr-2 text-yellow-500" />
+      Health Risk Assessment
+    </h3>
+    <div className="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg">
+      <p className="font-medium mb-2">Possible Health Risks:</p>
+      <ul className="list-disc list-inside mb-4">
+        {predictionData.possibleDiseases.map((disease, index) => (
+          <li key={index}>{disease}</li>
+        ))}
+      </ul>
+      <p className="font-medium">
+        Overall Risk Level: <span className="text-red-600 dark:text-red-400">{predictionData.riskLevel}</span>
+      </p>
+    </div>
+  </div>
 );
 
 const calculateBMI = (weight, height) => {
