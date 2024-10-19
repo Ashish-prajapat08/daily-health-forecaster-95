@@ -24,23 +24,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, set
       <Button variant="ghost" className="w-full p-4" onClick={toggleSidebar}>
         <Menu className="h-6 w-6" />
       </Button>
-      <nav className="mt-6">
-        {sidebarItems.map((item) => (
-          <Button
-            key={item.name}
-            variant={activeTab === item.name.toLowerCase().replace(' ', '-') ? 'secondary' : 'ghost'}
-            onClick={() => setActiveTab(item.name.toLowerCase().replace(' ', '-'))}
-            className={`w-full justify-start px-4 py-2 text-left ${isOpen ? '' : 'justify-center'}`}
-          >
-            <item.icon className="mr-2 h-4 w-4" />
-            {isOpen && item.name}
+      {isOpen && (
+        <>
+          <nav className="mt-6">
+            {sidebarItems.map((item) => (
+              <Button
+                key={item.name}
+                variant={activeTab === item.name.toLowerCase().replace(' ', '-') ? 'secondary' : 'ghost'}
+                onClick={() => setActiveTab(item.name.toLowerCase().replace(' ', '-'))}
+                className="w-full justify-start px-4 py-2 text-left"
+              >
+                <item.icon className="mr-2 h-4 w-4" />
+                {item.name}
+              </Button>
+            ))}
+          </nav>
+          <Button variant="ghost" className="w-full justify-start px-4 py-2 text-left absolute bottom-4">
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
           </Button>
-        ))}
-      </nav>
-      <Button variant="ghost" className="w-full justify-start px-4 py-2 text-left absolute bottom-4">
-        <LogOut className="mr-2 h-4 w-4" />
-        {isOpen && 'Logout'}
-      </Button>
+        </>
+      )}
     </aside>
   );
 };
