@@ -7,8 +7,9 @@ import Settings from '../components/Settings';
 import Activity from '../components/Activity';
 import ProgressTracking from '../components/ProgressTracking';
 import Recommendations from '../components/Recommendations';
+import Sidebar from '../components/Sidebar';
 import { Button } from '@/components/ui/button';
-import { Menu, Home, User, Activity as ActivityIcon, BarChart, LineChart } from 'lucide-react';
+import { User } from 'lucide-react';
 import { ThemeProvider } from 'next-themes';
 
 const queryClient = new QueryClient();
@@ -16,51 +17,32 @@ const queryClient = new QueryClient();
 const Index = () => {
   const [predictionData, setPredictionData] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const handlePredictionUpdate = (data) => {
     setPredictionData(data);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
-
-  const sidebarItems = [
-    { name: 'Dashboard', icon: Home },
-    { name: 'Profile', icon: User },
-    { name: 'Health Insights', icon: ActivityIcon },
-    { name: 'Activity', icon: BarChart },
-    { name: 'Progress Tracking', icon: LineChart },
-    { name: 'Recommendations', icon: LineChart },
-  ];
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class">
         <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
-          {/* Sidebar */}
-          <aside className="w-64 bg-white dark:bg-gray-800 shadow-md">
-            <div className="p-4">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SEVA</h1>
+          <Sidebar
+            isOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <main className={`flex-1 p-8 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'}`}>
+            <div className="flex justify-end mb-4">
+              <Button variant="ghost">
+                <User className="h-6 w-6" />
+              </Button>
             </div>
-            <nav className="mt-6">
-              {sidebarItems.map((item) => (
-                <Button
-                  key={item.name}
-                  variant={activeTab === item.name.toLowerCase().replace(' ', '-') ? 'secondary' : 'ghost'}
-                  onClick={() => setActiveTab(item.name.toLowerCase().replace(' ', '-'))}
-                  className="w-full justify-start px-4 py-2 text-left"
-                >
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {item.name}
-                </Button>
-              ))}
-            </nav>
-          </aside>
-
-          {/* Main content */}
-          <main className="flex-1 p-8">
             {activeTab === 'dashboard' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <LifestyleForm onPredictionUpdate={handlePredictionUpdate} />
