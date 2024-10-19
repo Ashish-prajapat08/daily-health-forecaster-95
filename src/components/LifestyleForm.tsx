@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
+import { Heart, Droplet, Activity, Thermometer, User, PieChart, Cigarette, Wine, Smile } from 'lucide-react';
+import { toast } from 'sonner';
 
 const predictHealth = async (data) => {
   // Simulated prediction logic
@@ -59,12 +61,10 @@ const LifestyleForm = ({ onPredictionUpdate }) => {
     mentalWellbeingScore: 7,
   });
 
-  const [notification, setNotification] = useState('');
-
   const mutation = useMutation({
     mutationFn: predictHealth,
     onSuccess: (data) => {
-      setNotification('Your health prediction has been updated.');
+      toast.success('Your health prediction has been updated.');
       onPredictionUpdate(data);
     },
   });
@@ -82,200 +82,72 @@ const LifestyleForm = ({ onPredictionUpdate }) => {
     setFormData({ ...formData, [name]: value[0] });
   };
 
+  const inputFields = [
+    { name: 'age', label: 'Age', icon: User, type: 'number' },
+    { name: 'weight', label: 'Weight (kg)', icon: Activity, type: 'number' },
+    { name: 'height', label: 'Height (cm)', icon: User, type: 'number' },
+    { name: 'heartRate', label: 'Heart Rate (bpm)', icon: Heart, type: 'number' },
+    { name: 'waterIntake', label: 'Water Intake (glasses)', icon: Droplet, type: 'number' },
+    { name: 'dailySteps', label: 'Daily Steps', icon: Activity, type: 'number' },
+    { name: 'bloodPressure', label: 'Blood Pressure (systolic)', icon: Thermometer, type: 'number' },
+    { name: 'bodyFatPercentage', label: 'Body Fat Percentage', icon: User, type: 'number' },
+    { name: 'cholesterolLevel', label: 'Cholesterol Level (mg/dL)', icon: PieChart, type: 'number' },
+    { name: 'smokingFrequency', label: 'Smoking Frequency (per day)', icon: Cigarette, type: 'number' },
+    { name: 'alcoholConsumption', label: 'Alcohol Consumption (per week)', icon: Wine, type: 'number' },
+  ];
+
+  const sliderFields = [
+    { name: 'exerciseFrequency', label: 'Exercise Frequency', icon: Activity, min: 0, max: 7 },
+    { name: 'sleepHours', label: 'Sleep Hours', icon: User, min: 4, max: 12 },
+    { name: 'stressLevel', label: 'Stress Level', icon: Activity, min: 1, max: 10 },
+    { name: 'dietQuality', label: 'Diet Quality', icon: PieChart, min: 1, max: 10 },
+    { name: 'mentalWellbeingScore', label: 'Mental Well-being Score', icon: Smile, min: 1, max: 10 },
+  ];
+
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 overflow-y-auto max-h-[calc(100vh-200px)]">
       <h2 className="text-2xl font-bold mb-6 dark:text-white">Your Lifestyle Information</h2>
-      {notification && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-          <span className="block sm:inline">{notification}</span>
-        </div>
-      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="mb-4">
-          <Label htmlFor="age">Age</Label>
-          <Input
-            id="age"
-            name="age"
-            type="number"
-            value={formData.age}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="weight">Weight (kg)</Label>
-          <Input
-            id="weight"
-            name="weight"
-            type="number"
-            value={formData.weight}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="height">Height (cm)</Label>
-          <Input
-            id="height"
-            name="height"
-            type="number"
-            value={formData.height}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="exerciseFrequency">Exercise Frequency (days per week)</Label>
-          <Slider
-            id="exerciseFrequency"
-            min={0}
-            max={7}
-            step={1}
-            value={[formData.exerciseFrequency]}
-            onValueChange={(value) => handleSliderChange('exerciseFrequency', value)}
-          />
-          <span className="text-sm text-gray-500 dark:text-gray-400">{formData.exerciseFrequency} days</span>
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="sleepHours">Average Sleep (hours per night)</Label>
-          <Slider
-            id="sleepHours"
-            min={4}
-            max={12}
-            step={0.5}
-            value={[formData.sleepHours]}
-            onValueChange={(value) => handleSliderChange('sleepHours', value)}
-          />
-          <span className="text-sm text-gray-500 dark:text-gray-400">{formData.sleepHours} hours</span>
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="stressLevel">Stress Level (1-10)</Label>
-          <Slider
-            id="stressLevel"
-            min={1}
-            max={10}
-            step={1}
-            value={[formData.stressLevel]}
-            onValueChange={(value) => handleSliderChange('stressLevel', value)}
-          />
-          <span className="text-sm text-gray-500 dark:text-gray-400">{formData.stressLevel}</span>
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="dietQuality">Diet Quality (1-10)</Label>
-          <Slider
-            id="dietQuality"
-            min={1}
-            max={10}
-            step={1}
-            value={[formData.dietQuality]}
-            onValueChange={(value) => handleSliderChange('dietQuality', value)}
-          />
-          <span className="text-sm text-gray-500 dark:text-gray-400">{formData.dietQuality}</span>
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="waterIntake">Water Intake (glasses per day)</Label>
-          <Slider
-            id="waterIntake"
-            min={0}
-            max={16}
-            step={1}
-            value={[formData.waterIntake]}
-            onValueChange={(value) => handleSliderChange('waterIntake', value)}
-          />
-          <span className="text-sm text-gray-500 dark:text-gray-400">{formData.waterIntake} glasses</span>
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="dailySteps">Daily Steps</Label>
-          <Input
-            id="dailySteps"
-            name="dailySteps"
-            type="number"
-            value={formData.dailySteps}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="heartRate">Heart Rate (bpm)</Label>
-          <Input
-            id="heartRate"
-            name="heartRate"
-            type="number"
-            value={formData.heartRate}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="bloodPressure">Blood Pressure (systolic)</Label>
-          <Input
-            id="bloodPressure"
-            name="bloodPressure"
-            type="number"
-            value={formData.bloodPressure}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="bodyFatPercentage">Body Fat Percentage</Label>
-          <Input
-            id="bodyFatPercentage"
-            name="bodyFatPercentage"
-            type="number"
-            value={formData.bodyFatPercentage}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="cholesterolLevel">Cholesterol Level (mg/dL)</Label>
-          <Input
-            id="cholesterolLevel"
-            name="cholesterolLevel"
-            type="number"
-            value={formData.cholesterolLevel}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="smokingFrequency">Smoking Frequency (cigarettes per day)</Label>
-          <Input
-            id="smokingFrequency"
-            name="smokingFrequency"
-            type="number"
-            value={formData.smokingFrequency}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="alcoholConsumption">Alcohol Consumption (drinks per week)</Label>
-          <Input
-            id="alcoholConsumption"
-            name="alcoholConsumption"
-            type="number"
-            value={formData.alcoholConsumption}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="mentalWellbeingScore">Mental Well-being Score (1-10)</Label>
-          <Slider
-            id="mentalWellbeingScore"
-            min={1}
-            max={10}
-            step={1}
-            value={[formData.mentalWellbeingScore]}
-            onValueChange={(value) => handleSliderChange('mentalWellbeingScore', value)}
-          />
-          <span className="text-sm text-gray-500 dark:text-gray-400">{formData.mentalWellbeingScore}</span>
-        </div>
+        {inputFields.map((field) => (
+          <div key={field.name} className="mb-4">
+            <Label htmlFor={field.name} className="flex items-center">
+              <field.icon className="mr-2 h-4 w-4" />
+              {field.label}
+            </Label>
+            <Input
+              id={field.name}
+              name={field.name}
+              type={field.type}
+              value={formData[field.name]}
+              onChange={handleInputChange}
+              className="mt-1"
+              required
+            />
+          </div>
+        ))}
+        {sliderFields.map((field) => (
+          <div key={field.name} className="mb-4">
+            <Label htmlFor={field.name} className="flex items-center">
+              <field.icon className="mr-2 h-4 w-4" />
+              {field.label}
+            </Label>
+            <Slider
+              id={field.name}
+              min={field.min}
+              max={field.max}
+              step={1}
+              value={[formData[field.name]]}
+              onValueChange={(value) => handleSliderChange(field.name, value)}
+              className="mt-2"
+            />
+            <span className="text-sm text-gray-500 dark:text-gray-400 mt-1 block">
+              {formData[field.name]}
+            </span>
+          </div>
+        ))}
       </div>
-      <Button type="submit" disabled={mutation.isPending} className="mt-4">
-        {mutation.isPending ? 'Predicting...' : 'Predict Health'}
+      <Button type="submit" className="mt-6 w-full" disabled={mutation.isPending}>
+        {mutation.isPending ? 'Updating...' : 'Update Health Prediction'}
       </Button>
     </form>
   );
