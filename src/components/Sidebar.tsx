@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, Home, User, Activity as ActivityIcon, BarChart, LineChart, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, setActiveTab }) => {
+  const navigate = useNavigate();
   const sidebarItems = [
     { name: 'Dashboard', icon: Home },
     { name: 'Profile', icon: User },
@@ -19,11 +21,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, set
     { name: 'Recommendations', icon: LineChart },
   ];
 
+  const handleLogout = () => {
+    // Implement logout logic here (e.g., clear user session)
+    navigate('/login');
+  };
+
   return (
     <aside className={`bg-black text-white h-screen fixed left-0 top-0 transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>
-      <Button variant="ghost" className="w-full p-4" onClick={toggleSidebar}>
-        <Menu className="h-6 w-6" />
-      </Button>
+      <div className="flex justify-between items-center p-4">
+        <Button variant="ghost" className="p-2" onClick={toggleSidebar}>
+          <Menu className="h-6 w-6" />
+        </Button>
+        {isOpen && <span className="text-xl font-bold">Menu</span>}
+      </div>
       {isOpen && (
         <>
           <nav className="mt-6">
@@ -39,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, set
               </Button>
             ))}
           </nav>
-          <Button variant="ghost" className="w-full justify-start px-4 py-2 text-left absolute bottom-4">
+          <Button variant="ghost" className="w-full justify-start px-4 py-2 text-left absolute bottom-4" onClick={handleLogout}>
             <LogOut className="mr-2 h-4 w-4" />
             Logout
           </Button>
