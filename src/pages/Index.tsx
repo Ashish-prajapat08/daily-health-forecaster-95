@@ -13,7 +13,7 @@ import { ThemeProvider } from 'next-themes';
 
 const queryClient = new QueryClient();
 
-const Index = () => {
+const Index = ({ onLogout }) => {
   const [predictionData, setPredictionData] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -35,9 +35,10 @@ const Index = () => {
             toggleSidebar={toggleSidebar}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            onLogout={onLogout}
           />
           <div className="flex-1 flex flex-col">
-            <Navbar />
+            <Navbar onLogout={onLogout} />
             <main className={`flex-1 p-8 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'} mt-16`}>
               {activeTab === 'dashboard' && (
                 <div className="space-y-8">

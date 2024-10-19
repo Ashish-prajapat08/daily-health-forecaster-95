@@ -16,6 +16,10 @@ const App = () => {
     setIsLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class">
@@ -27,7 +31,7 @@ const App = () => {
                 isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
               } />
               <Route path="/" element={
-                isLoggedIn ? <Index /> : <Navigate to="/login" />
+                isLoggedIn ? <Index onLogout={handleLogout} /> : <Navigate to="/login" />
               } />
             </Routes>
           </BrowserRouter>

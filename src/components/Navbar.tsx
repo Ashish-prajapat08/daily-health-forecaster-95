@@ -1,6 +1,5 @@
 import React from 'react';
 import { User, Settings, LogOut } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,14 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-const Navbar = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Implement logout logic here (e.g., clear user session)
-    navigate('/login');
-  };
-
+const Navbar = ({ onLogout }) => {
   return (
     <nav className="bg-white dark:bg-gray-800 shadow-md py-4 fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -38,7 +30,7 @@ const Navbar = () => {
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onSelect={handleLogout}>
+              <DropdownMenuItem onSelect={onLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>
