@@ -41,7 +41,7 @@ const Index = ({ onLogout }) => {
           />
           <div className="flex-1 flex flex-col">
             <Navbar onLogout={onLogout} />
-            <main className={`flex-1 p-8 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'} mt-16`}>
+            <main className={`flex-1 p-8 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'} mt-16 bg-gray-100 dark:bg-gray-900`}>
               {activeTab === 'dashboard' && (
                 <div className="space-y-8">
                   <LifestyleForm onPredictionUpdate={handlePredictionUpdate} />
