@@ -50,7 +50,6 @@ const Index = ({ onLogout }) => {
               )}
               {activeTab === 'profile' && <Profile />}
               {activeTab === 'settings' && <Settings />}
-              {activeTab === 'health-insights' && <Settings />}
               {activeTab === 'activity' && <Activity />}
               {activeTab === 'progress-tracking' && <ProgressTracking />}
               {activeTab === 'recommendations' && userData && <Recommendations userData={userData} />}

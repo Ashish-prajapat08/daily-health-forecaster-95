@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, Home, User, Activity as ActivityIcon, BarChart, LineChart, LogOut } from 'lucide-react';
+import { Menu, Home, User, Activity as ActivityIcon, BarChart, LineChart, LogOut, Settings } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -14,7 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, set
   const sidebarItems = [
     { name: 'Dashboard', icon: Home },
     { name: 'Profile', icon: User },
-    { name: 'Health Insights', icon: ActivityIcon },
+    { name: 'Settings', icon: Settings },
     { name: 'Activity', icon: BarChart },
     { name: 'Progress Tracking', icon: LineChart },
     { name: 'Recommendations', icon: LineChart },
