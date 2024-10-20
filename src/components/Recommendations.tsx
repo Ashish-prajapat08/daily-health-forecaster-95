@@ -119,7 +119,12 @@ const Recommendations = ({ userData }) => {
               {recommendations.find(rec => rec.title === category.title) ? (
                 <p>{recommendations.find(rec => rec.title === category.title).content}</p>
               ) : (
-                <p>Input your health data to receive personalized {category.title.toLowerCase()} recommendations.</p>
+                <p>
+                  {userData 
+                    ? `No specific ${category.title.toLowerCase()} recommendations at this time. Continue updating your health data for personalized advice.`
+                    : `Input your health data to receive personalized ${category.title.toLowerCase()} recommendations.`
+                  }
+                </p>
               )}
             </CardContent>
           </Card>
