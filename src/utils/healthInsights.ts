@@ -5,8 +5,13 @@ export interface Insight {
   message: string;
 }
 
-export const generateInsights = (data: HealthData[]): Insight[] => {
+export const generateInsights = (data: HealthData[] | null): Insight[] => {
   const insights: Insight[] = [];
+
+  // Check if data is null or empty
+  if (!data || data.length === 0) {
+    return [{ type: 'suggestion', message: 'Start tracking your health data to receive insights.' }];
+  }
 
   // Check for decreasing step count
   const recentSteps = data.slice(-7).map(d => d.steps);

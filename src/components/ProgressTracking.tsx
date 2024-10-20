@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 interface ProgressTrackingProps {
-  userData: any; // You might want to replace 'any' with a more specific type
+  userData: HealthData[] | null;
 }
 
 const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
@@ -17,8 +17,7 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
   const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month'>('week');
 
   useEffect(() => {
-    // If userData is available, use it instead of mock data
-    if (userData) {
+    if (userData && userData.length > 0) {
       setData(userData);
       setInsights(generateInsights(userData));
     } else {
