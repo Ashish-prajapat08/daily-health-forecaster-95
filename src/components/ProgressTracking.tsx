@@ -15,11 +15,25 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
 
   useEffect(() => {
     if (userData) {
-      setInsights(generateInsights(userData));
+      setInsights(generateInsights([userData])); // Wrap userData in an array if it's not already one
     }
   }, [userData]);
 
-  const filteredData = selectedPeriod === 'week' ? userData?.slice(-7) : userData;
+  // Create an array of data points for charts
+  const createDataArray = () => {
+    if (!userData) return [];
+    const dataArray = [];
+    for (let i = 0; i < 7; i++) { // Create 7 data points for a week
+      dataArray.push({
+        date: new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        ...userData
+      });
+    }
+    return dataArray;
+  };
+
+  const chartData = createDataArray();
+  const filteredData = selectedPeriod === 'week' ? chartData : chartData;
 
   const renderInsightIcon = (type: Insight['type']) => {
     switch (type) {
@@ -32,7 +46,7 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
     }
   };
 
-  if (!userData || userData.length === 0) {
+  if (!userData) {
     return <div>No data available. Please input your health data in the dashboard.</div>;
   }
 
