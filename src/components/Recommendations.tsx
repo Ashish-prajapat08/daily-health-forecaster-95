@@ -107,28 +107,37 @@ const Recommendations = ({ userData }) => {
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
       <h2 className="text-2xl font-bold mb-6 dark:text-white">Personalized Health Recommendations</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {recommendationCategories.map((category, index) => (
-          <Card key={index} className="overflow-hidden">
-            <CardHeader className="bg-blue-100 dark:bg-blue-900">
-              <CardTitle className="flex items-center">
-                <category.icon className="mr-2 h-6 w-6" />
-                {category.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-4">
-              {recommendations.find(rec => rec.title === category.title) ? (
-                <p>{recommendations.find(rec => rec.title === category.title).content}</p>
-              ) : (
-                <p>
-                  {userData 
-                    ? `No specific ${category.title.toLowerCase()} recommendations at this time. Continue updating your health data for personalized advice.`
-                    : `Input your health data to receive personalized ${category.title.toLowerCase()} recommendations.`
-                  }
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        ))}
+        {recommendationCategories.map((category, index) => {
+          const recommendation = recommendations.find(rec => rec.title === category.title);
+          
+          // If user data exists and there's no recommendation for this category, don't render it
+          if (userData && !recommendation) {
+            return null;
+          }
+
+          return (
+            <Card key={index} className="overflow-hidden">
+              <CardHeader className="bg-blue-100 dark:bg-blue-900">
+                <CardTitle className="flex items-center">
+                  <category.icon className="mr-2 h-6 w-6" />
+                  {category.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                {userData ? (
+                  recommendation ? (
+                    <p>{recommendation.content}</p>
+                  ) : null
+                ) : (
+                  <p>
+                    No specific {category.title.toLowerCase()} recommendations at this time. 
+                    Input your health data to receive personalized advice.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
