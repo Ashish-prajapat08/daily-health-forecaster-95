@@ -6,8 +6,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from 'next-themes';
 import Index from "./pages/Index";
 import Login from "./components/Login";
-import Profile from "./components/Profile";
-import Settings from "./components/Settings";
 
 const queryClient = new QueryClient();
 
@@ -34,12 +32,6 @@ const App = () => {
               } />
               <Route path="/" element={
                 isLoggedIn ? <Index onLogout={handleLogout} /> : <Navigate to="/login" />
-              } />
-              <Route path="/profile" element={
-                isLoggedIn ? <Profile /> : <Navigate to="/login" />
-              } />
-              <Route path="/settings" element={
-                isLoggedIn ? <Settings /> : <Navigate to="/login" />
               } />
             </Routes>
           </BrowserRouter>
