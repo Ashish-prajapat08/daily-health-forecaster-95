@@ -7,16 +7,26 @@ import { generateInsights, Insight } from '../utils/healthInsights';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
-const ProgressTracking = () => {
+interface ProgressTrackingProps {
+  userData: any; // You might want to replace 'any' with a more specific type
+}
+
+const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
   const [data, setData] = useState<HealthData[]>([]);
   const [insights, setInsights] = useState<Insight[]>([]);
   const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month'>('week');
 
   useEffect(() => {
-    const mockData = generateMockData(30);
-    setData(mockData);
-    setInsights(generateInsights(mockData));
-  }, []);
+    // If userData is available, use it instead of mock data
+    if (userData) {
+      setData(userData);
+      setInsights(generateInsights(userData));
+    } else {
+      const mockData = generateMockData(30);
+      setData(mockData);
+      setInsights(generateInsights(mockData));
+    }
+  }, [userData]);
 
   const filteredData = selectedPeriod === 'week' ? data.slice(-7) : data;
 
