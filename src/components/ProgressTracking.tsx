@@ -2,32 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Activity, Heart, Droplet, Scale, Moon, AlertTriangle, Award, Lightbulb } from 'lucide-react';
-import { generateMockData, HealthData } from '../utils/mockDataGenerator';
 import { generateInsights, Insight } from '../utils/healthInsights';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 
 interface ProgressTrackingProps {
-  userData: HealthData[] | null;
+  userData: any; // Replace 'any' with a more specific type if available
 }
 
 const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
-  const [data, setData] = useState<HealthData[]>([]);
   const [insights, setInsights] = useState<Insight[]>([]);
   const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month'>('week');
 
   useEffect(() => {
-    if (userData && userData.length > 0) {
-      setData(userData);
+    if (userData) {
       setInsights(generateInsights(userData));
-    } else {
-      const mockData = generateMockData(30);
-      setData(mockData);
-      setInsights(generateInsights(mockData));
     }
   }, [userData]);
 
-  const filteredData = selectedPeriod === 'week' ? data.slice(-7) : data;
+  const filteredData = selectedPeriod === 'week' ? userData?.slice(-7) : userData;
 
   const renderInsightIcon = (type: Insight['type']) => {
     switch (type) {
@@ -39,6 +31,10 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
         return <Lightbulb className="text-blue-500" />;
     }
   };
+
+  if (!userData || userData.length === 0) {
+    return <div>No data available. Please input your health data in the dashboard.</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -91,7 +87,7 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
               <Tooltip />
               <Legend />
               <Line yAxisId="left" type="monotone" dataKey="weight" stroke="#8884d8" name="Weight (kg)" />
-              <Line yAxisId="right" type="monotone" dataKey="bodyFat" stroke="#82ca9d" name="Body Fat (%)" />
+              <Line yAxisId="right" type="monotone" dataKey="bodyFatPercentage" stroke="#82ca9d" name="Body Fat (%)" />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
@@ -110,7 +106,7 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
               <YAxis yAxisId="right" orientation="right" />
               <Tooltip />
               <Legend />
-              <Line yAxisId="left" type="monotone" dataKey="steps" stroke="#8884d8" name="Steps" />
+              <Line yAxisId="left" type="monotone" dataKey="dailySteps" stroke="#8884d8" name="Steps" />
               <Line yAxisId="right" type="monotone" dataKey="calories" stroke="#82ca9d" name="Calories Burned" />
             </LineChart>
           </ResponsiveContainer>
@@ -131,7 +127,7 @@ const ProgressTracking: React.FC<ProgressTrackingProps> = ({ userData }) => {
               <Tooltip />
               <Legend />
               <Line yAxisId="left" type="monotone" dataKey="heartRate" stroke="#ff7300" name="Heart Rate (bpm)" />
-              <Line yAxisId="right" type="monotone" dataKey="stress" stroke="#413ea0" name="Stress Level" />
+              <Line yAxisId="right" type="monotone" dataKey="stressLevel" stroke="#413ea0" name="Stress Level" />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
