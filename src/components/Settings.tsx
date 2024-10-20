@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
 
 const Settings = () => {
   const [notifications, setNotifications] = useState(false);
@@ -62,6 +63,7 @@ const Settings = () => {
                 />
               </div>
             </div>
+            <Button className="mt-6" onClick={() => navigate('/')}>Back to Dashboard</Button>
           </div>
         </main>
       </div>
