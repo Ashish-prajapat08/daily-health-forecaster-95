@@ -122,20 +122,20 @@ const WaterIntakeChart = ({ data }) => (
 
 const AnalyticalStatistics = ({ userData }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-    <StatCard icon={Scale} title="BMI" value={calculateBMI(userData.weight, userData.height).toFixed(1)} />
-    <StatCard icon={Activity} title="Daily Steps" value={userData.dailySteps ? userData.dailySteps.toLocaleString() : 'N/A'} />
-    <StatCard icon={Moon} title="Sleep Time" value={`${userData.sleepHours || 'N/A'}h`} />
-    <StatCard icon={Heart} title="Resting Heart Rate" value={`${userData.heartRate || 'N/A'} bpm`} />
+    <StatCard icon={Scale} title="BMI" value={calculateBMI(userData.weight, userData.height).toFixed(1)} bgColor="bg-blue-100" />
+    <StatCard icon={Activity} title="Daily Steps" value={userData.dailySteps ? userData.dailySteps.toLocaleString() : 'N/A'} bgColor="bg-green-100" />
+    <StatCard icon={Moon} title="Sleep Time" value={`${userData.sleepHours || 'N/A'}h`} bgColor="bg-indigo-100" />
+    <StatCard icon={Heart} title="Resting Heart Rate" value={`${userData.heartRate || 'N/A'} bpm`} bgColor="bg-red-100" />
   </div>
 );
 
-const StatCard = ({ icon: Icon, title, value }) => (
-  <Card>
+const StatCard = ({ icon: Icon, title, value, bgColor }) => (
+  <Card className={`${bgColor} transition-colors hover:bg-opacity-80`}>
     <CardContent className="flex items-center p-4">
-      <Icon className="h-8 w-8 text-blue-500 mr-4" />
+      <Icon className="h-8 w-8 text-gray-600 mr-4" />
       <div>
-        <p className="text-sm font-medium text-gray-500">{title}</p>
-        <p className="text-2xl font-bold">{value}</p>
+        <p className="text-sm font-medium text-gray-600">{title}</p>
+        <p className="text-2xl font-bold text-gray-800">{value}</p>
       </div>
     </CardContent>
   </Card>
