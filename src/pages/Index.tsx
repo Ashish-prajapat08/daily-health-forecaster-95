@@ -51,7 +51,7 @@ const Index = ({ onLogout }) => {
               {activeTab === 'profile' && <Profile />}
               {activeTab === 'settings' && <Settings />}
               {activeTab === 'activity' && <Activity />}
-              {activeTab === 'progress-tracking' && <ProgressTracking />}
+              {activeTab === 'progress-tracking' && <ProgressTracking userData={userData} />}
               {activeTab === 'recommendations' && userData && <Recommendations userData={userData} />}
             </main>
           </div>
