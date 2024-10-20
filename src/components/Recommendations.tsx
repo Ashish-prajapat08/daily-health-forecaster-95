@@ -3,11 +3,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Utensils, Activity, Brain, Heart, Droplet, Scale, Cigarette, Wine } from 'lucide-react';
 
 const Recommendations = ({ userData }) => {
-  if (!userData) {
-    return <div>Loading user data...</div>;
-  }
+  const recommendationCategories = [
+    { title: 'Weight Management', icon: Scale },
+    { title: 'Physical Activity', icon: Activity },
+    { title: 'Sleep Hygiene', icon: Brain },
+    { title: 'Stress Management', icon: Brain },
+    { title: 'Hydration', icon: Droplet },
+    { title: 'Heart Health', icon: Heart },
+    { title: 'Smoking Cessation', icon: Cigarette },
+    { title: 'Alcohol Moderation', icon: Wine },
+  ];
 
   const getRecommendations = () => {
+    if (!userData) return [];
+
     const recommendations = [];
 
     // BMI-based recommendations
@@ -109,22 +118,26 @@ const Recommendations = ({ userData }) => {
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
       <h2 className="text-2xl font-bold mb-6 dark:text-white">Personalized Health Recommendations</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {recommendations.map((rec, index) => (
+        {recommendationCategories.map((category, index) => (
           <Card key={index} className="overflow-hidden">
             <CardHeader className="bg-blue-100 dark:bg-blue-900">
               <CardTitle className="flex items-center">
-                <rec.icon className="mr-2 h-6 w-6" />
-                {rec.title}
+                <category.icon className="mr-2 h-6 w-6" />
+                {category.title}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4">
-              <p className="mb-4">{rec.content}</p>
-              <img src={rec.image} alt={rec.title} className="w-full h-40 object-cover rounded-md mb-4" />
-              {rec.video && (
-                <video controls className="w-full rounded-md">
-                  <source src={rec.video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+              {recommendations.find(rec => rec.title === category.title) ? (
+                <>
+                  <p className="mb-4">{recommendations.find(rec => rec.title === category.title).content}</p>
+                  <img 
+                    src={recommendations.find(rec => rec.title === category.title).image} 
+                    alt={category.title} 
+                    className="w-full h-40 object-cover rounded-md mb-4" 
+                  />
+                </>
+              ) : (
+                <p>No specific recommendations at this time. Input your data for personalized advice.</p>
               )}
             </CardContent>
           </Card>
