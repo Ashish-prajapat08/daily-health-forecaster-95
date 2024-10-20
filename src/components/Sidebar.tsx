@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, Home, User, Activity as ActivityIcon, BarChart, LineChart, LogOut, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -11,14 +12,21 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, setActiveTab, onLogout }) => {
+  const navigate = useNavigate();
+
   const sidebarItems = [
-    { name: 'Dashboard', icon: Home },
-    { name: 'Profile', icon: User },
-    { name: 'Settings', icon: Settings },
-    { name: 'Activity', icon: BarChart },
-    { name: 'Progress Tracking', icon: LineChart },
-    { name: 'Recommendations', icon: LineChart },
+    { name: 'Dashboard', icon: Home, path: '/' },
+    { name: 'Profile', icon: User, path: '/profile' },
+    { name: 'Settings', icon: Settings, path: '/settings' },
+    { name: 'Activity', icon: BarChart, path: '/activity' },
+    { name: 'Progress Tracking', icon: LineChart, path: '/progress-tracking' },
+    { name: 'Recommendations', icon: LineChart, path: '/recommendations' },
   ];
+
+  const handleNavigation = (path: string, tabName: string) => {
+    setActiveTab(tabName.toLowerCase().replace(' ', '-'));
+    navigate(path);
+  };
 
   return (
     <aside className={`bg-black text-white h-screen fixed left-0 top-0 transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>
@@ -35,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, activeTab, set
               <Button
                 key={item.name}
                 variant={activeTab === item.name.toLowerCase().replace(' ', '-') ? 'secondary' : 'ghost'}
-                onClick={() => setActiveTab(item.name.toLowerCase().replace(' ', '-'))}
+                onClick={() => handleNavigation(item.path, item.name)}
                 className="w-full justify-start px-4 py-2 text-left"
               >
                 <item.icon className="mr-2 h-4 w-4" />
